@@ -1,6 +1,6 @@
 <?php
 //stale zmienne zwiazane z aplikacja
-error_reporting(E_ERROR | E_WARNING); //E_ERROR - wyswietla tylko fatal errory
+//error_reporting(E_ERROR | E_WARNING); //E_ERROR - wyswietla tylko fatal errory
 //sciezka przypisane globalnie na stale
 define("__URL__", "http://localhost/back/4/stronaWWW/");
 //potem moge wywolac to <img src <?php = __URL__ pytajnik>nazwapliku.jpg">

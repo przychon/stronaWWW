@@ -25,11 +25,32 @@ function fetchAllNews($connectDB, $sort){
 	}
 };
 
-function addNew($connectDB){ //dodawanie nowego newsa
-	$sqlQuery = "INSERT INTO t_aktualnosci (tytul_aktualnosci, naglowek_aktualnosci, data_publikacji_aktualnosci) VALUES ('Nowa aktualnosc','Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',NOW()) ";
-
+function addNew($connectDB, $dataFormNew){ //dodawanie nowego newsa
+	//debug($dataFormNew);
+	$sqlQuery = "INSERT INTO t_aktualnosci (tytul_aktualnosci, naglowek_aktualnosci, data_publikacji_aktualnosci) VALUES ('".$dataFormNew['tytul_aktualnosci']."','".$dataFormNew['naglowek_aktualnosci']."',NOW() );";
 	//echo $sqlQuery;
 	mysqli_query($connectDB, $sqlQuery);
 	//jak wejde na strone ?action=add_new  i odswież to dodaje te aktualnosc teraz
 };
+
+function usunAktualnosc($connectDB,$id_aktualnosci){
+	$sqlQuery = "DELETE FROM t_aktualnosci WHERE id_aktualnosci = $id_aktualnosci";
+	//echo $sqlQuery;
+	mysqli_query($connectDB, $sqlQuery);
+};
+
+function aktualizuj($connectDB, $id_aktualnosci){
+	$sqlQuery = "SELECT * FROM t_aktualnosci WHERE id_aktualnosci = $id_aktualnosci";
+	$sqlResult = mysqli_query($connectDB, $sqlQuery);
+	$numRows = mysqli_num_rows($sqlResult);
+	if($numRows > 0){
+			return mysqli_fetch_assoc($sqlResult);
+	}else{
+			return 0;
+	}
+};
+
+
+	$sqlQuery = "UPDATE t_aktualnosci SET tytul_aktualnosci=[value-2],naglowek_aktualnosci=[value-3] WHERE id_aktualnosci = $id_aktualnosci";
+
  ?>
