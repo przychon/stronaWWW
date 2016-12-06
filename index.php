@@ -26,6 +26,12 @@ if($_GET['action'] == "usun"){
   usunAktualnosc($connectDB, $_GET["id_aktualnosci"]);
 };
 
+//GALERIA
+if(isset($_GET["action"]) && ($_GET['action'] == "addNewFoto")){
+  addNewFoto($connectDB, $_POST, $_FILES); //tablica globalan $_FILES
+};
+
+
  ?>
 
 <!DOCTYPE html>
@@ -86,10 +92,11 @@ if($_GET['action'] == "usun"){
       foreach (fetchAllFoto($connectDB) as $oneFoto) : 	 ?>
         <a href = "zdjecie.php?id_foto=<?=$oneFoto["id_foto"] ?>" target =_blank><div id = "img_<?=$oneFoto["id_zdjecia"]; ?>" title = <?=$oneFoto["tytul_foto"]; ?> ><img src =<?=$oneFoto["nazwaPliku_foto"]; ?>></div></a>
 
-
       <?php
     endforeach;
+
        ?>
+       <br><a href="addNewFoto.php?action=addNewFoto"><button id = "dodajFoto">Dodaj</button></a>
 
    </section>
 	</body>

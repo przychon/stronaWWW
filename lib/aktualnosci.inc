@@ -39,6 +39,9 @@ function usunAktualnosc($connectDB,$id_aktualnosci){
 	mysqli_query($connectDB, $sqlQuery);
 };
 
+
+
+//AKTUALIZUJ AKTUALNOŚĆ
 function aktualizuj($connectDB, $id_aktualnosci){
 	$sqlQuery = "SELECT * FROM t_aktualnosci WHERE id_aktualnosci = $id_aktualnosci";
 	$sqlResult = mysqli_query($connectDB, $sqlQuery);
@@ -50,7 +53,17 @@ function aktualizuj($connectDB, $id_aktualnosci){
 	}
 };
 
+//I ZAPISZ ZAKTUALIZOWANĄ
+function saveNew($connectDB, $dataFormNew){
+	//$sqlQuery = "UPDATE t_aktualnosci SET "tytul_aktualnosci = '".$dataFormNew["tytul_aktualnosci"]."',".
+	//"naglowek_aktualnosci = '".$dataFormNew["naglowek_aktualnosci"]."'," . "data_publikacji_aktualnosci = NOW()"  WHERE id_aktualnosci = $id_aktualnosci";
+	$sqlQuery="UPDATE t_aktualnosci SET
+	tytul_aktualnosci = '".$dataFormNew["tytul_aktualnosci"]."',
+	naglowek_aktualnosci='".$dataFormNew["naglowek_aktualnosci"]."',
+	data_publikacji_aktualnosci = NOW()
+	WHERE id_aktualnosci = ".$dataFormNew["id_aktualnosci"];
+	mysqli_query($connectDB, $sqlQuery);
+};
 
-	$sqlQuery = "UPDATE t_aktualnosci SET tytul_aktualnosci=[value-2],naglowek_aktualnosci=[value-3] WHERE id_aktualnosci = $id_aktualnosci";
 
  ?>
