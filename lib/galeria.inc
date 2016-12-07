@@ -90,7 +90,7 @@ function saveNewFoto($connectDB, $dataFormNew, $dataFileNew){
 	//debug($_GET);
 			mysqli_query($connectDB, $sqlQuery);
 
-			//Usuwam plik z folderu (jeśli nowy plik nie nazywa sie tak samo jak plik pierwotny)
+			//Usuwam plik z folderu (jeśli nowy plik nie nazywa sie tak samo jak plik pierwotny) to by moglo byc jakos w ifie!
 			if("img/".$dataFileNew["nazwaPliku_foto"]["name"] != $dataFormNew["nazwaPliku_fotoOld"]){
 				unlink($dataFormNew["nazwaPliku_fotoOld"]);
 			}

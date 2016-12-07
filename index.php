@@ -18,19 +18,36 @@ require 'lib/galeria.inc';
 
 $connectDB = connectDB(__HOST__, __UNAME__, __PASSWD__, __DB_NAME__, __DB_CHARSET_SET__);
 
-if(isset($_GET["action"]) && ($_GET['action'] == "add_new")){
+//ZMieniam to ponizej zeby uzyc filter
+/*if(isset($_GET["action"]) && ($_GET['action'] == "add_new")){
   addNew($connectDB, $_POST); //$_POST przejda informacje przeslane z formularza
 };
-
-if($_GET['action'] == "usun"){
-  usunAktualnosc($connectDB, $_GET["id_aktualnosci"]);
+*/
+//TO SAMO CO WYZEJ INACZEJ. ZALECANE BO BEZPIECZNIEJSZE. bez isset
+/*if(filter_input(INPUT_GET, "action") == "add_new"){
+  addNew($connectDB, $_POST); //$_POST przejda informacje przeslane z formularza
 };
+*/
+//dalej moge wpisac w tresci aktualnosci skrypt ktory znajdzie sie w bazie danych np <script>alert("test")</script> To na stronie wyskoczy alert, więc zmieniam dalej:
+//To SAMO CO WYZEJ TYLKO JESZCZE LEPIEJ
+if(filter_input(INPUT_GET, "action") == "add_new"){ //filter_input - konkretny rekord, filter input array - cala tablica
+  addNew($connectDB, filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING)); //$_POST zamienione
+};
+//teraz dodaje tekst tylko, nie wrzuca skryptow do bazy danych. nie zadziala tez wstrzykiwanie SQL
+//analogicznie następne
+
+if(filter_input(INPUT_GET, "action") == "usun"){ //a bylo if ($_GET['action'] == "usun")
+  usunAktualnosc($connectDB, filter_input(INPUT_GET, "id_aktualnosci"));
+};
+
+//$filterGet = filter_input(INPUT_GET, "action");
+//debug($filterGet);
 
 //GALERIA
-if(isset($_GET["action"]) && ($_GET['action'] == "addNewFoto")){
-  addNewFoto($connectDB, $_POST, $_FILES); //tablica globalan $_FILES
+if(filter_input(INPUT_GET, "action") == "addNewFoto"){ //bylo z isset($_GET["action"]) ale juz niepotrzbene
+  addNewFoto($connectDB, filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING), $_FILES); //tablica globalan $_FILES. abylo addNewFoto($connectDB, $_POST, $_FILES);
 };
-
+//jeszcze poprawic isseta ale nie da sie na filter input po prostu i wtedy isset jest niepotrzebne
 
  ?>
 
